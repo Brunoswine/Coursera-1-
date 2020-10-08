@@ -1,21 +1,26 @@
 #include <iostream>
+#include <string>
 
 using namespace std;
 
 int main()
 {
-
-	int a, b;
-	cin >> a >> b;
 	
-	while(a<=b) {
-		if (a % 2 == 0) {
-			cout << a << " ";
-			a++;
-		}else a++;
-		
+	int f;
+	string str;
+	cin >> str;
+	int i = 0;
+	int sum = 0;
+	for (auto c : str) {
+		if (c == 'f') {
+			sum++;
+			if (sum ==2) f = i;
+		}
+		i++;
 	}
-
+	if (!sum) cout << -2;
+	if (sum==1) cout << -1;
+	if (sum>1) cout << f;
 
 	system("pause");
 	return 0;
