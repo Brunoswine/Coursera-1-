@@ -1,26 +1,30 @@
 #include <iostream>
+#include <vector>
 #include <string>
 
 using namespace std;
 
 int main()
 {
-	
-	int f;
-	string str;
-	cin >> str;
-	int i = 0;
-	int sum = 0;
-	for (auto c : str) {
-		if (c == 'f') {
-			sum++;
-			if (sum ==2) f = i;
-		}
-		i++;
+	vector<int> vect;
+	vector<int> invvect;
+	int a,b,c,N;
+	cin >> a;
+	b = a;
+	while (a!=0) {
+		b = a % 2;
+		a = a / 2;
+			vect.push_back(b);
+		
+		
+		 
 	}
-	if (!sum) cout << -2;
-	if (sum==1) cout << -1;
-	if (sum>1) cout << f;
+	string outStr;
+	c = vect.size()-1;
+	for (int i = c; i>-1; i--) {
+		outStr += vect[i] + '0';
+	}
+	cout << outStr;
 
 	system("pause");
 	return 0;
