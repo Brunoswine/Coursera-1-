@@ -1,31 +1,54 @@
 #include <iostream>
-#include <vector>
-#include <string>
 
 using namespace std;
 
+int NOD(int a, int b) {
+	int nod = 1;
+	int buf;
+	if (a == 0)
+		return b;
+	if (b == 0)
+		return a;
+	if (a == b)
+		return a;
+	if (a == 1 || b == 1)
+		return 1;
+	while (a != 0 && b != 0) {
+		if (a % 2 == 0 && b % 2 == 0) {
+			nod *= 2;
+			a /= 2;
+			b /= 2;
+			continue;
+		}
+		if (a % 2 == 0 && b % 2 != 0) {
+			a /= 2;
+			continue;
+		}
+		if (a % 2 != 0 && b % 2 == 0) {
+			b /= 2;
+			continue;
+		}
+		if (a > b) {
+			buf = a;
+			a = b;
+			b = buf;
+		}
+		buf = a;
+		a = (b - a) / 2;
+		b = buf;
+	}
+	if (a == 0)
+		return nod * b;
+	else
+		return nod * a;
+}
+
+
 int main()
 {
-	vector<int> vect;
-	vector<int> invvect;
-	int a,b,c,N;
-	cin >> a;
-	b = a;
-	while (a!=0) {
-		b = a % 2;
-		a = a / 2;
-			vect.push_back(b);
-		
-		
-		 
-	}
-	string outStr;
-	c = vect.size()-1;
-	for (int i = c; i>-1; i--) {
-		outStr += vect[i] + '0';
-	}
-	cout << outStr;
-
+	int a, b;
+	cin >> a >> b;
+	cout << NOD(a, b);
 	system("pause");
 	return 0;
 }
