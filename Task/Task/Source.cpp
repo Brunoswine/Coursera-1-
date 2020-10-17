@@ -2,28 +2,33 @@
 
 using namespace std;
 
-int main() {
-	int a, b;
-	cin >> a >> b;
-
-	// пока оба числа положительны, будем их уменьшать, не меняя их НОД
-	while (a > 0 && b > 0) {
-
-		// возьмём большее из чисел и заменим его остатком от деления на второе
-		// действительно, если a и b делятся на x, то a - b и b делятся на x
-		// тогда и a % b и b делятся на x, так что можно a заменить на a % b
-		if (a > b) {
-			a %= b;
-		}
-		else {
-			b %= a;
-		}
-
+int Factorial(int N) {
+	int sum = 1;
+	if (N <= 0){
+		return 1; 
 	}
 
-	// если одно из чисел оказалось равно нулю, значит, на последней итерации
-	// большее число разделилось на меньшее
-	cout << a + b;
+
+	for (int i = 1; i <= N; i++) {
+		sum*= i;
+	}
+	return sum;
+}
+
+int FactorialRecurs(int x) {
+	if (x <= 1) {
+		return 1;
+	}
+	else {
+		return x * Factorial(x - 1);  // вычисляем факториал от x-1 и умножаем на x
+	}
+}
+
+
+int main() {
+	int a;
+	cin >> a;
+	cout << Factorial(a);
 	system("pause");
 	return 0;
 }
