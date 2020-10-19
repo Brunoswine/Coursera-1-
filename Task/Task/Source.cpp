@@ -3,23 +3,29 @@
 #include <vector>
 using namespace std;
 
-//Максимизатор, Неделя 2
+//Перемещение строк, Неделя 2
 
 
-void UpdateIfGreater(int a, int &b) {
-	if (a > b) {
-		b = a;
+void MoveStrings(vector<string> &source, vector<string> &destination) {
+	for (string c : source) {
+		destination.push_back(c);
 	}
+	source.clear();
 }
 
 
 
 int main() {
-	int a, b;
-	cin >> a >> b;
-	cout << endl << "a=" << a << "b=" << b;
-	UpdateIfGreater(7, b);
-	cout << endl << "a=" << a << "b=" << b;
-	system("pause");
+	vector<string> source = {"a","b","c"};
+	vector<string> destination = {"z"};
+	MoveStrings(source, destination);
+	for (string c : source) {
+		cout <<"source  "<< c << " " << endl;
+	}
+	cout << "destination ";
+	for (string d : destination) {
+		cout << d << ",";
+	}
+	//system("pause");
 	return 0;
 }
