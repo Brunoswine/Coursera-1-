@@ -3,29 +3,31 @@
 #include <vector>
 using namespace std;
 
-//ѕеремещение строк, Ќедел€ 2
+//–азворот последовательности, Ќедел€ 2
 
 
-void MoveStrings(vector<string> &source, vector<string> &destination) {
-	for (string c : source) {
-		destination.push_back(c);
+
+void Reverse(vector<int>& vect) {
+	vector<int> temp = vect;
+	vect.clear();
+	for (int x : temp) {
+		vect.insert(vect.begin(),x); //вставл€ем в начало вектора число // первый параметр куда вставл€ем, второй - что имеено вставл€ем
 	}
-	source.clear();
 }
 
 
 
 int main() {
-	vector<string> source = {"a","b","c"};
-	vector<string> destination = {"z"};
-	MoveStrings(source, destination);
-	for (string c : source) {
-		cout <<"source  "<< c << " " << endl;
+	vector<int> vect = {5,4,3};
+	cout << "before"<<endl;
+	for (auto c : vect) {
+		cout << c <<", ";
 	}
-	cout << "destination ";
-	for (string d : destination) {
-		cout << d << ",";
+	Reverse(vect);
+	cout << "after " << endl;
+	for (auto c : vect) {
+		cout << c << ", ";
 	}
-	//system("pause");
+	system("pause");
 	return 0;
 }
