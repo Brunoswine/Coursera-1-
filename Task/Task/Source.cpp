@@ -16,12 +16,12 @@ bool countryExists(const map<string, string>& m, const string& country) {  //Tru
 	return f;
 }
 
-vector<string> busesSearch(const map<string, vector<string>>& m, const string& stop){
+vector<string> busesSearch(map<string, vector<string>>& m, const string& stop, vector<string>& orderOfCreation){
 	vector<string> result;
-	for (const auto& x : m) {
-		for (const string& st : x.second) {
+	for ( string& str : orderOfCreation) {
+		for ( string& st : m[str]) {
 			if (st == stop) {
-				result.push_back(x.first);
+				result.push_back(str);
 			}
 		}
 	}
@@ -33,12 +33,9 @@ vector<string> busesSearch(const map<string, vector<string>>& m, const string& s
 int main() {
 	int N;
 	cin >> N;
-
-
-	string command,country,new_capital;
-	bool f = false;
-	map<string, string> CapMap;
+	string command;
 	string bus;
+	vector <string> orderOfCreation; // вектор порядка создания маршрутов
 	map<string, vector<string>> route;
 
 	for (int i = 0; i < N; i++) {
@@ -48,6 +45,7 @@ int main() {
 			int stop_count;
 			cin >> bus;
 			cin >> stop_count;
+			orderOfCreation.push_back(bus);
 			string stop1;
 			vector<string> stops;
 			for (int j = 0; j < stop_count; j++) {
@@ -60,6 +58,16 @@ int main() {
 			bool flag = false;             // x.first - номер автобуса, x.second - вектор с остановками
 			string stop;
 			cin >> stop;
+
+			for (string& str : orderOfCreation) {
+				for (string& st : route[str]) {
+					if (st == stop) {
+						cout << str << " ";
+						flag = true;
+					}
+				}
+			}
+			/*
 			for (const auto & x : route) {
 				for (string st : x.second) {
 					if (st == stop) { 
@@ -67,6 +75,7 @@ int main() {
 					flag = true; }
 				}
 			}
+			*/
 			if (flag) {
 				cout << endl;
 			}
@@ -87,8 +96,15 @@ int main() {
 
 
 			for (string &stop : route[bus]) { // Итерирумеся по вектору остановок
-				vector<string> buses = busesSearch(route, stop);  //создаем вектор пересечений остановки с другими маршрутами(пересадки)
-				buses.erase(buses.begin()); // удаление исходного автобуса
+				vector<string> buses = busesSearch(route, stop, orderOfCreation);  //создаем вектор пересечений остановки с другими маршрутами(пересадки)
+				int index = 0;
+				for (int i = 0; i < buses.size(); i++) {  // удаление исходного автобуса
+					if (buses[i] == bus){
+						index = i;
+						break;
+					}
+				}
+				buses.erase(buses.begin()+index);
 				cout <<"Stop "<< stop<<": ";
 				if (buses.size() == 0) {
 					cout << "no interchange"<<endl;
