@@ -5,26 +5,71 @@
 
 using namespace std;
 
-set<string> BuildMapValuesSet(const map <int, string>& m) {
-	set<string> s;
-	for (const auto& x : m) {
-		s.insert(x.second);
-	}
-	return s;
+//Синонимы, Неделя 2
+
+void createSet(set<string>& temp) {
+	temp.clear();
+	string word1, word2;
+	cin >> word1 >> word2;
+	temp.insert(word1);
+	temp.insert(word2);
+	
 }
-//Количество уникальных строк, Неделя 2
-
 int main() {
-	set<string> values = BuildMapValuesSet({
-	{1, "odd"},
-	{2, "even"},
-	{3, "odd"},
-	{4, "even"},
-	{5, "odd"}
-		});
+	set<set<string>> sinonims;
+	int N;
+	cin >> N;
+	set<string> temp; 
+	string command;
+	for (int i = 0; i < N; i++) {
+		cin >> command;
+		if (command == "ADD") {
+			//temp.clear();
+			createSet(temp);
+			//string word1, word2;
+			//cin >> word1 >> word2;
+			//temp.insert(word1);
+			//temp.insert(word2);
+			sinonims.insert(temp);
+		}
 
-	for (const string& value : values) {
-		cout << value << endl;
+		if (command == "COUNT") {
+			int sum = 0;
+			string word;
+			cin >> word;
+
+
+			for (const set<string>& x : sinonims) {
+				if(x.count(word)){
+					sum++;
+				}
+				
+
+				/*
+				for (const string& st : x) {
+					if(st==word){
+						sum++;
+					}
+				}
+				*/
+			}
+			cout << sum << endl;
+		}
+		if (command == "CHECK") {
+			bool flag = false;
+			createSet(temp);
+			//string word1, word2;
+			//cin >> word1 >> word2;
+
+			for (const set<string>& x : sinonims) {
+				if (x==temp) {
+					cout << "YES" << endl;
+					flag = true;
+					break;
+				}
+			}
+			if (!flag) { cout << "NO" << endl; }
+		}
 	}
 
 	system("pause");
