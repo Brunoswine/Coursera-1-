@@ -16,7 +16,7 @@ void createSet(set<string>& temp) {
 	
 }
 int main() {
-	set<set<string>> sinonims;
+	map <string,set<string>> synonims;
 	int N;
 	cin >> N;
 	set<string> temp; 
@@ -24,54 +24,43 @@ int main() {
 	for (int i = 0; i < N; i++) {
 		cin >> command;
 		if (command == "ADD") {
-			//temp.clear();
-			createSet(temp);
-			//string word1, word2;
-			//cin >> word1 >> word2;
-			//temp.insert(word1);
-			//temp.insert(word2);
-			sinonims.insert(temp);
+			string word1, word2;
+			cin >> word1 >> word2;
+			synonims[word1].insert(word2);
+			synonims[word2].insert(word1);
+			continue;
 		}
 
 		if (command == "COUNT") {
 			int sum = 0;
 			string word;
 			cin >> word;
-
-
-			for (const set<string>& x : sinonims) {
-				if(x.count(word)){
-					sum++;
-				}
-				
-
-				/*
-				for (const string& st : x) {
-					if(st==word){
-						sum++;
-					}
-				}
-				*/
+			if (synonims.count(word)) {
+				cout << synonims[word].size() << endl;
+				continue;
 			}
-			cout << sum << endl;
+			else {
+				cout << 0 << endl;
+				continue;
+			}
 		}
+
 		if (command == "CHECK") {
-			bool flag = false;
-			createSet(temp);
-			//string word1, word2;
-			//cin >> word1 >> word2;
-
-			for (const set<string>& x : sinonims) {
-				if (x==temp) {
+			string word1, word2;
+			cin >> word1 >> word2;
+			if (synonims.count(word1)) {
+				if (synonims[word1].count(word2)) {
 					cout << "YES" << endl;
-					flag = true;
-					break;
+				}else {
+					cout << "NO" << endl;
 				}
+			}else {
+				cout << "NO" << endl;
 			}
-			if (!flag) { cout << "NO" << endl; }
 		}
+		
 	}
-
+	
 	system("pause");
 	return 0;
 }
