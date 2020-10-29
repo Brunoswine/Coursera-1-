@@ -1,66 +1,36 @@
 #include <iostream>
 #include <set>
 #include <string>
+#include <vector>
 #include <map>
 
 using namespace std;
 
-//Синонимы, Неделя 2
-
-void createSet(set<string>& temp) {
-	temp.clear();
-	string word1, word2;
-	cin >> word1 >> word2;
-	temp.insert(word1);
-	temp.insert(word2);
-	
-}
+//Автобусные маршурты - 3, Неделя 2
 int main() {
-	map <string,set<string>> synonims;
 	int N;
 	cin >> N;
-	set<string> temp; 
-	string command;
-	for (int i = 0; i < N; i++) {
-		cin >> command;
-		if (command == "ADD") {
-			string word1, word2;
-			cin >> word1 >> word2;
-			synonims[word1].insert(word2);
-			synonims[word2].insert(word1);
-			continue;
+	set<string> temp;
+	map<set<string>, int> route;
+	for (int i = 0; i < N; ++i) {
+		int q;
+		cin >> q;
+		string str;
+		temp.clear();
+		for (int i = 0; i < q; i++) {
+			cin >> str;
+			temp.insert(str);
 		}
-
-		if (command == "COUNT") {
-			int sum = 0;
-			string word;
-			cin >> word;
-			if (synonims.count(word)) {
-				cout << synonims[word].size() << endl;
-				continue;
-			}
-			else {
-				cout << 0 << endl;
-				continue;
-			}
+		if (route.count(temp) == 0) {
+			int size = route.size() + 1;
+			route[temp] = size; // обращение к элементу создает его
+			cout << "New bus " << size << endl;
 		}
-
-		if (command == "CHECK") {
-			string word1, word2;
-			cin >> word1 >> word2;
-			if (synonims.count(word1)) {
-				if (synonims[word1].count(word2)) {
-					cout << "YES" << endl;
-				}else {
-					cout << "NO" << endl;
-				}
-			}else {
-				cout << "NO" << endl;
-			}
+		else {
+			cout<< "Already exists for " << route[temp]<< endl;
 		}
-		
 	}
-	
-	system("pause");
+
 	return 0;
+	system("pause");
 }
